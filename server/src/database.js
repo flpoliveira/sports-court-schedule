@@ -1,21 +1,24 @@
-console.log("connecting to database...");
-const { Client } = require('pg');
+const client = require('./config/db');
 
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    databse: 'database',
-    password: 'postgres',
-    port: 5432,
-});
-
-
-client.connect();
-
-console.log("database connected!");
-console.log("creating tables...");
+console.log("droping triggers");
 
 let query = `
+DROP TRIGGER IF EXISTS verificaCPFUsuario ON Usuarios;
+DROP TRIGGER IF EXISTS verificaCPFGerenciador ON Gerenciadores;
+DROP TRIGGER IF EXISTS verificaConflitoAgendamento ON Reservas;
+DROP TRIGGER IF EXISTS verificaDataHoraInicioFim ON Reservas;
+`;
+
+client.query(query, (err, res) => {
+    if (err) {
+        console.error(err);
+    }
+    console.log("triggers successfully deleted!");
+});
+
+console.log("creating tables...");
+
+query = `
 CREATE TABLE IF NOT EXISTS Blocos (
     id SERIAL NOT NULL,
     nome VARCHAR(55) NOT NULL,

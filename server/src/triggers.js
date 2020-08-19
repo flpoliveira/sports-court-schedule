@@ -1,18 +1,5 @@
-console.log("connecting to database...");
-const { Client } = require('pg');
+const client = require('./config/db');
 
-const client = new Client({
-    user: 'postgres',
-    host: 'localhost',
-    databse: 'database',
-    password: 'postgres',
-    port: 5432,
-});
-
-client.connect();
-
-
-console.log("database connected!");
 console.log("creating triggers...");
 
 const query = `
@@ -37,7 +24,7 @@ CREATE OR REPLACE FUNCTION verificaCPFGerenciador() RETURNS TRIGGER AS
 $$
 BEGIN
   IF(SELECT 1
-  FROM Usuarios
+  FROM Gerenciadores
   WHERE cpf == NEW.cpf
   ) THEN
     RAISE EXCEPTION 'CPF para gerenciador já foi usado!';
