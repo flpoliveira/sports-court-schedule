@@ -42,16 +42,16 @@ Go to server and run:
 * Create the database
 
 ```
-    npm run database
+npm run database
 ```
 * Create the triggers
 
 ```
-    npm run triggers
+npm run triggers
 ```
 
 * Run the backend server
 
 ```
-    npm run server
+npm run server
 ```
