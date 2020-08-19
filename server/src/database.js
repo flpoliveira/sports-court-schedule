@@ -10,6 +10,7 @@ const client = new Client({
 });
 
 
+client.connect();
 
 console.log("database connected!");
 console.log("creating tables...");
@@ -72,7 +73,6 @@ CREATE TABLE IF NOT EXISTS Gerenciadores_Reservas (
     FOREIGN KEY (idReserva) REFERENCES Reservas(id)
 );
 `;
-client.connect();
 
 client.query(query, (err, res) => {
     if (err) {

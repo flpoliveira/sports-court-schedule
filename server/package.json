@@ -4,7 +4,9 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
+    "server": "nodemon src/server.js",
     "database": "node src/database.js",
+    "triggers": "node src/triggers.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
