@@ -33,3 +33,25 @@ In this project we have the users, admins and subadmins:
 - [ ] Request reports.
 
 
+---
+
+### Running project
+
+Go to server and run:
+
+* Create the database
+
+```
+    npm run database
+```
+* Create the triggers
+
+```
+    npm run triggers
+```
+
+* Run the backend server
+
+```
+    npm run server
+```
