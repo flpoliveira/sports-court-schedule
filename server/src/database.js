@@ -128,6 +128,21 @@ console.log("selecting data...");
 query = `
 SELECT * FROM Blocos;
 `;
+
+client.query(query, (err, res) => {
+    if (err) {
+        console.error(err);
+    }
+    for (let row of res.rows) {
+        console.log(row);
+    }
+});
+
+query = `
+SELECT * FROM Gerenciadores;
+`;
+
+
 client.query(query, (err, res) => {
     if (err) {
         console.error(err);

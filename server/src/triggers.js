@@ -8,7 +8,7 @@ $$
 BEGIN
   IF(SELECT 1
   FROM Usuarios
-  WHERE cpf == NEW.cpf
+  WHERE cpf LIKE NEW.cpf
   ) THEN
     RAISE EXCEPTION 'CPF para usuario já foi usado!';
   END IF;
@@ -25,7 +25,7 @@ $$
 BEGIN
   IF(SELECT 1
   FROM Gerenciadores
-  WHERE cpf == NEW.cpf
+  WHERE cpf::text LIKE NEW.cpf::text
   ) THEN
     RAISE EXCEPTION 'CPF para gerenciador já foi usado!';
   END IF;

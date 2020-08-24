@@ -1,15 +1,15 @@
 const express = require("express");
-const {response} = express;
+
 const LoginController = require("./controllers/LoginController");
-const RegisterController = require("./controllers/RegisterController");
+const GerenciadoresController = require("./controllers/GerenciadoresController");
 const authJwt = require("./middlewares/authJwt");
 
 const routes = express.Router();
 
 
-routes.get("/login", LoginController.login);
+routes.post("/login", LoginController.login);
 
 routes.use(authJwt);
-routes.post("/register", RegisterController.register);
+routes.post("/register", GerenciadoresController.register);
 
-module.exports = routes;
+module.exports = routes; 

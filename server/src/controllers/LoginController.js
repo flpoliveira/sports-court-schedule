@@ -5,6 +5,7 @@ const jwtKey = require("../config/authKey");
 module.exports = {
     async login(request, response) {
         const {cpf, senha} = request.body;
+        console.log(request.body);
         console.log("someone is trying to login ...");
 
         GerenciadoresModel.login(cpf, senha, (err, user) => {
