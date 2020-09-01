@@ -42,8 +42,8 @@ $$
 BEGIN
   IF(SELECT 1
      FROM Reservas
-     WHERE dataHoraInic < CURRENT_TIMESTAMP
-     OR dataHoraFim < CURRENT_TIMESTAMP
+     WHERE datahorainicio < CURRENT_TIMESTAMP
+     OR datahorafim < CURRENT_TIMESTAMP
     ) THEN
       RAISE EXCEPTION 'Data hora de inicio ou fim está invalida!';
     END IF;
@@ -60,8 +60,9 @@ $$
 BEGIN
   IF(SELECT 1 
      FROM Reservas
-     WHERE dataHoraInic <= NEW.dataHoraInic
-     AND dataHoraFim >= NEW.dataHoraFim
+     WHERE datahorainicio <= NEW.datahorainicio
+     AND datahorafim >= NEW.datahorafim
+     AND idquadra = NEW.idquadra
     ) THEN
       RAISE EXCEPTION 'Já existe um agendamento para este horário';
     END IF;

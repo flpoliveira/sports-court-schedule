@@ -33,7 +33,7 @@ module.exports = {
             } else {
                 usuario = await UsuariosModel.getId(id);
             }
-            
+            console.log(usuario);
 
             return response.send(usuario);
         } catch (err) {

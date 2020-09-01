@@ -11,10 +11,9 @@ import "./assets/css/pe-icon-7-stroke.css";
 import { persistor, store } from "./store";
 import { Provider } from 'react-redux';
 
-import ReduxToastr from 'react-redux-toastr';
+// import ReduxToastr from 'react-redux-toastr';
 import { Routes } from "./routes";
 import { PersistGate } from 'redux-persist/integration/react'
-
 
 
 ReactDOM.render(

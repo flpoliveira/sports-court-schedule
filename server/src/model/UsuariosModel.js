@@ -20,7 +20,6 @@ module.exports = {
         try {
             const query = `SELECT * FROM Usuarios`;
             const res = await client.query(query);
-
             return res.rows;
         } catch (error) {
             return {error};

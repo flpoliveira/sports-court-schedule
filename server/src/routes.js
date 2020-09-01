@@ -18,17 +18,17 @@ routes.use(authJwt);
 routes.get("/gerenciador", GerenciadoresController.get);
 routes.post("/gerenciador", GerenciadoresController.create);
 
-routes.get("/blocos", BlocosController.get);
-routes.post("/blocos", BlocosController.create);
+routes.get("/bloco", BlocosController.get);
+routes.post("/bloco", BlocosController.create);
 
-routes.get("/quadras", QuadrasController.get);
-routes.post("/quadras", QuadrasController.create);
+routes.get("/quadra", QuadrasController.get);
+routes.post("/quadra", QuadrasController.create);
 
-routes.get("/usuarios", UsuariosController.get);
-routes.post("/usuarios", UsuariosController.create);
+routes.get("/usuario", UsuariosController.get);
+routes.post("/usuario", UsuariosController.create);
 
-routes.get("/reservas", ReservasController.get);
-routes.post("/reservas", ReservasController.create);
-routes.post("/reservasupdate", ReservasController.update);
+routes.get("/reserva", ReservasController.get);
+routes.post("/reserva", ReservasController.create);
+routes.post("/reservaupdate", ReservasController.update);
 
 module.exports = routes; 

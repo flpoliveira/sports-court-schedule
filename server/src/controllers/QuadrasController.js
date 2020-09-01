@@ -30,6 +30,7 @@ module.exports = {
             let quadra = null;
             if (typeof id === "undefined") {
                 quadra = await QuadrasModel.getAll();
+                console.log(quadra);
             } else {
                 quadra = await QuadrasModel.getId(id);
             }

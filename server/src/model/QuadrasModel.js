@@ -6,7 +6,7 @@ module.exports = {
 
         try {
             const query = `INSERT INTO Quadras (nome, descricao, idbloco) 
-            VALUES ($1, $2) RETURNING *`;
+            VALUES ($1, $2, $3) RETURNING *`;
             const res = await client.query(query,[nome, descricao, idbloco]);
             console.log(res, query);
             return res.rows[0];
@@ -18,7 +18,9 @@ module.exports = {
 
     async getAll() {
         try {
-            const query = `SELECT * FROM Quadras`;
+            const query = `SELECT Quadras.id, Quadras.nome, Quadras.descricao, Blocos.nome as Bloconome 
+            FROM Quadras
+            JOIN Blocos ON Quadras.idbloco = Blocos.id `;
             const res = await client.query(query);
 
             return res.rows;

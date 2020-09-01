@@ -23,7 +23,7 @@ module.exports = {
                 idquadra,
                 idgerenciador 
             });
-
+            console.log(reserva);
             return response.send(reserva);
         } catch (err) {
             return response.status(400).send({message: "Error on register Reserva!"});
@@ -49,6 +49,7 @@ module.exports = {
         }
     },
     async get(request, response, next) {
+        console.log("trying to get a reserva");
         try {
 
             const { id } = request.query;
@@ -58,7 +59,7 @@ module.exports = {
             } else {
                 reserva = await ReservasModel.getId(id);
             }
-            
+            console.log(reserva);
 
             return response.send(reserva);
         } catch (err) {

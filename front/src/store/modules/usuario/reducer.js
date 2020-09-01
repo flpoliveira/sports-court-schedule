@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   usuario: [],
 };
 
-export default function usuarioes(state = INITIAL_STATE, action) {
+export default function usuarios(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
       case '@usuario/GET_USUARIO_REQUEST': {

@@ -16,22 +16,20 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { newGerenciadorRequest } from "store/modules/gerenciador/actions";
+import { newUsuarioRequest } from "store/modules/usuario/actions";
 
 
-const CreateGerenciador = () => {
+const CreateUsuario = () => {
   const dispatch = useDispatch();
   const [nomecompleto, setNomeCompleto] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [senha, setSenha] = React.useState("");
   const [cpf, setCpf] = React.useState("");
-  const [ehAdmin, setEhAdmin] = React.useState(false);
 
   const submitForm = () => {
-    const gerenciador = {
-        nomecompleto, email, senha, cpf, ehAdmin 
+    const usuario = {
+        nomecompleto, email, cpf 
     }
-    dispatch(newGerenciadorRequest(gerenciador));
+    dispatch(newUsuarioRequest(usuario));
   }
 
   return (
@@ -46,7 +44,7 @@ const CreateGerenciador = () => {
                 <CardTitle tag="h4">
                   Novo Gerenciador
                   <Col size={6}>  
-                    <Link to="/gerenciador">
+                    <Link to="/usuario">
                         <Button 
                           color="primary"
                           style={{
@@ -65,36 +63,17 @@ const CreateGerenciador = () => {
               >
                 <Form>
                   <FormGroup>
-                    <Label for="name">Nome Completo</Label>
-                    <Input type="text" name="nome" id="name" placeholder="Nome completo" onChange={(e) => setNomeCompleto(e.target.value)}/>
+                    <Label for="name">Nome</Label>
+                    <Input type="text" name="nome" id="name" placeholder="Nome Completo" onChange={(e) => setNomeCompleto(e.target.value)}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="cpf">CPF</Label>
-                    <Input type="text" name="cpf" id="cpf" placeholder="Cpf" onChange={(e) => setCpf(e.target.value)}/>
+                    <Label for="email">Nome</Label>
+                    <Input type="email" name="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="exampleEmail">Email</Label>
-                    <Input type="email" name="email" id="exampleEmail" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
+                    <Label for="cpf">Cpf</Label>
+                    <Input type="text" name="cpf" id="cpf" placeholder="CPF" onChange={(e) => setCpf(e.target.value)}/>
                   </FormGroup>
-                  <FormGroup>
-                    <Label for="password">Senha</Label>
-                    <Input type="password" name="password" id="password" placeholder="Senha" onChange={(e) => setSenha(e.target.value)}/>
-                  </FormGroup>
-                  <FormGroup check>
-                    <Label check>
-                      <Input type="checkbox" 
-                        onChange={(e) =>{
-                          if (e.target.checked) {
-                            setEhAdmin(true);
-                          } else {
-                            setEhAdmin(false);
-                          }
-                        }}
-                      />{' '}
-                      O Gerenciador eh admin
-                    </Label>
-                  </FormGroup>
-
                   
 
                 </Form>
@@ -120,4 +99,4 @@ const CreateGerenciador = () => {
   );
 }
 
-export default CreateGerenciador;
+export default CreateUsuario;
