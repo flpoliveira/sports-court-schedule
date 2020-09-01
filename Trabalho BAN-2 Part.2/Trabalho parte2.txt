@@ -1,0 +1,19 @@
+Gerenciadores (#id, nomeCompleto, email, senha, cpf, ehAdmin)
+
+Usuarios(#id, nomeCompleto, email, cpf)
+
+Blocos(#id, nome, descricao)
+
+Quadras(#id, nome, descricao, idBloco)
+    idBloco referencia Blocos
+
+Reservas(#id, dataHoraInicio, dataHoraFim, ativo, motivo, idUsuario, idQuadra)
+    idUsuario referencia Usuarios
+    idQuadra referencia Quadras
+
+Acoes(#id, idGerenciador, idReserva, tipo)
+    idGerenciador referencia Gerenciadores
+    idReserva referencia Reservas
+
+
+

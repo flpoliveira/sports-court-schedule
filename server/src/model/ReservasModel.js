@@ -16,6 +16,7 @@ module.exports = {
          * 3 - Cancelamento
          */
         try {
+            console.log(datahorafim, datahorainicio);
            let query = `INSERT INTO Reservas(datahorainicio, datahorafim, ativo, motivo, idusuario, idquadra) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
             const res = await client.query(query, [datahorainicio, datahorafim, ativo, motivo, idusuario, idquadra]);
             const reserva = res.rows[0];

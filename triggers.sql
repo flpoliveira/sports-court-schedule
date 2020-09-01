@@ -1,8 +1,3 @@
-const client = require('./config/db');
-
-console.log("creating triggers...");
-
-const query = `
 CREATE OR REPLACE FUNCTION verificaCPFUsuario() RETURNS TRIGGER AS
 $$
 BEGIN
@@ -73,13 +68,3 @@ LANGUAGE plpgsql;
 
 CREATE TRIGGER verificaConflitoAgendamento BEFORE INSERT ON Reservas
 FOR EACH ROW EXECUTE PROCEDURE verificaConflitoAgendamento();
-
-`;
-
-client.query(query, (err, res) => {
-    if (err) {
-        console.error(err);
-    }
-    console.log("triggers successfully created!");
-    client.end();
-});
