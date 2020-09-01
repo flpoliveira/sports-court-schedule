@@ -3,12 +3,17 @@ const jwtKey = require("../config/authKey");
 
 module.exports = async (req, res, next) => {
     try {
-        const authHeader = req.headers.token;
-
+        const authHeader = req.headers.authorization;
         if (!authHeader) {
             return res.status(401).json({error: "Token not provided!"});
         }
-        const decoded = await jwt.verify(authHeader, jwtKey.secret);
+        const [, token] = authHeader.split(' ')
+
+        if (!token) {
+            return res.status(401).json({ error: 'Token malformatted' })
+        }
+
+        const decoded = await jwt.verify(token, jwtKey.secret);
 
         req.userId = decoded.userId;
 

@@ -1,23 +1,22 @@
 const GerenciadoresModel = require("../model/GerenciadoresModel");
 
 module.exports = {
-    async register(request, response, next) {
+    async create(request, response, next) {
         
-        const {nomeCompleto, email, senha, cpf, ehAdmin } = request.body;
-
-        if (
-            typeof nomeCompleto === "undefined" ||
-            typeof email === "undefined" ||
-            typeof cpf === "undefined" ||
-            typeof senha === "undefined" ||
-            typeof ehAdmin === "undefined"
-        ) {
-            response.status(400).send({message: "Error undefined body!"});
-        }
-
+        const {nomecompleto, email, senha, cpf, ehAdmin } = request.body;
         try {
+            if (
+                typeof nomecompleto === "undefined" ||
+                typeof email === "undefined" ||
+                typeof cpf === "undefined" ||
+                typeof senha === "undefined" ||
+                typeof ehAdmin === "undefined"
+            ) {
+                response.status(400).send({message: "Error undefined body!"});
+            }
+
             const gerenciador = await GerenciadoresModel.create({
-                nomeCompleto, email, senha, cpf, ehAdmin
+                nomecompleto, email, senha, cpf, ehAdmin
             });
 
             return response.send(gerenciador);
@@ -29,7 +28,7 @@ module.exports = {
     async get(request, response, next) {
         try {
 
-            const { id } = request.params;
+            const { id } = request.query;
             let gerenciador = null;
             if (typeof id === "undefined") {
                 gerenciador = await GerenciadoresModel.getAll();

@@ -1,5 +1,4 @@
 const client = require("../config/db");
-const { update } = require("../controllers/GerenciadoresController");
 
 module.exports = {
     async login(cpf, senha, callback) {
@@ -15,18 +14,17 @@ module.exports = {
                     }
                     callback(err, res.rows[0]);
                 }
-                client.end();
             }
         );
     },
     
     async create(object) {
-        const {nomeCompleto, email, senha, cpf, ehAdmin} = object;
+        const {nomecompleto, email, senha, cpf, ehAdmin} = object;
 
         try {
-            const query = `INSERT INTO Gerenciadores (nomeCompleto, email, senha, cpf, ehAdmin) 
+            const query = `INSERT INTO Gerenciadores (nomecompleto, email, senha, cpf, ehAdmin) 
             VALUES ($1, $2,  $3, $4, $5) RETURNING *`;
-            const res = await client.query(query,[nomeCompleto, email, senha, cpf, ehAdmin]);
+            const res = await client.query(query,[nomecompleto, email, senha, cpf, ehAdmin]);
             console.log(res, query);
             return res.rows[0];
         } catch (error) {

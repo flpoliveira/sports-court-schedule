@@ -1,87 +1,63 @@
-/*!
+import React from "react";
 
-=========================================================
-* Light Bootstrap Dashboard React - v1.3.0
-=========================================================
+import history from "./history";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import api from './services/api';
+import { ConnectedRouter } from 'connected-react-router'
 
-* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+import Login from "./views/Login";
+import Gerenciador from "./views/Gerenciador";
+import CreateGerenciador  from "./views/Gerenciador/CreateGerenciador";
+import AdminLayout from "layouts/Admin.jsx";
 
-* Coded by Creative Tim
+import { RiAdminLine } from "react-icons/ri";
 
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-import Dashboard from "views/Dashboard.jsx";
-import UserProfile from "views/UserProfile.jsx";
-import TableList from "views/TableList.jsx";
-import Typography from "views/Typography.jsx";
-import Icons from "views/Icons.jsx";
-import Maps from "views/Maps.jsx";
-import Notifications from "views/Notifications.jsx";
-import Upgrade from "views/Upgrade.jsx";
-
-const dashboardRoutes = [
+const routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "pe-7s-graph",
-    component: Dashboard,
-    layout: "/admin"
+    path: "",
+    name: "Gerenciadores",
+    icon: () => <RiAdminLine size={15} />,
+    component: Gerenciador,
+    layout: "/gerenciador"
   },
-  {
-    path: "/user",
-    name: "User Profile",
-    icon: "pe-7s-user",
-    component: UserProfile,
-    layout: "/admin"
-  },
-  {
-    path: "/table",
-    name: "Table List",
-    icon: "pe-7s-note2",
-    component: TableList,
-    layout: "/admin"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "pe-7s-news-paper",
-    component: Typography,
-    layout: "/admin"
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: "pe-7s-science",
-    component: Icons,
-    layout: "/admin"
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: "pe-7s-map-marker",
-    component: Maps,
-    layout: "/admin"
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "pe-7s-bell",
-    component: Notifications,
-    layout: "/admin"
-  },
-  {
-    upgrade: true,
-    path: "/upgrade",
-    name: "Upgrade to PRO",
-    icon: "pe-7s-rocket",
-    component: Upgrade,
-    layout: "/admin"
-  }
 ];
 
-export default dashboardRoutes;
+const Routes = () => {
+  const signed = useSelector(state => state.auth.signed);
+  const token = useSelector(state => state.auth.token);
+  console.log(signed, token, "signed and token");
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return (
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route exact path="/">
+          {signed ? <Redirect to="/admin"  /> : <Redirect to="/login"  />}
+        </Route>
+        {signed ? (
+          <>
+            <Route exact path="/admin" render={props => <AdminLayout {...props} content={Gerenciador}/>} />
+            <Route exact path="/gerenciador" render={props => <AdminLayout {...props} content={Gerenciador} />} />
+            <Route exact path="/creategerenciador" render={props => <AdminLayout {...props} content={CreateGerenciador} />} />
+          </>
+        ) : (
+          <>
+            <Route path="/login" component={Login} />
+          </>
+        )}
+        
+      </Switch>
+    </ConnectedRouter>
+  );
+};
+
+export {
+  Routes,
+  history,
+};
+
+export default routes;

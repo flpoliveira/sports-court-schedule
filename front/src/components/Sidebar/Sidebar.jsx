@@ -57,18 +57,10 @@ class Sidebar extends Component {
           )}
         <div className="logo">
           <a
-            href="https://www.creative-tim.com?ref=lbd-sidebar"
-            className="simple-text logo-mini"
-          >
-            <div className="logo-img">
-              <img src={logo} alt="logo_image" />
-            </div>
-          </a>
-          <a
-            href="https://www.creative-tim.com?ref=lbd-sidebar"
+            href="http://localhost:3000/admin"
             className="simple-text logo-normal"
           >
-            Creative Tim
+            Agendamento de Quadras
           </a>
         </div>
         <div className="sidebar-wrapper">
