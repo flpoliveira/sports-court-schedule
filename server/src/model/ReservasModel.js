@@ -43,7 +43,7 @@ module.exports = {
             idgerenciador,
             tipo
         } = object;
-
+        console.log(object);
         try {
             const query = `INSERT INTO Gerenciadores_Reservas(idgerenciador, idreserva, tipo)
             VALUES ($1, $2, $3)`;
@@ -57,13 +57,14 @@ module.exports = {
     },
     async getAll() {
         try {
-            const query = `SELECT Gerenciadores.nomecompleto, Gerenciadores.cpf, Gerenciadores_Reservas.tipo, Reservas.datahorainicio, 
-                Reservas.datahorafim, Reservas.motivo,  Usuarios.nomecompleto as usuarionome, Quadras.nome as quadra FROM Reservas
-                JOIN Usuarios ON Reservas.idusuario = Usuarios.id
-                JOIN Quadras ON Reservas.idquadra = Quadras.id
-                LEFT JOIN Gerenciadores_Reservas ON Reservas.id = Gerenciadores_Reservas.idReserva 
-                LEFT JOIN Gerenciadores ON Gerenciadores_Reservas.idGerenciador = Gerenciadores.id
-                 ORDER BY Gerenciadores_Reservas.id DESC`;
+            const query = `SELECT si.idgerenciador as gerenciadorid, Reservas.id, si.nomecompleto, si.cpf, si.tipo, Reservas.datahorainicio, 
+            Reservas.datahorafim, Reservas.motivo,  Usuarios.nomecompleto as usuarionome, Quadras.nome as quadra FROM Reservas
+            JOIN Usuarios ON Reservas.idusuario = Usuarios.id
+            JOIN Quadras ON Reservas.idquadra = Quadras.id
+            LEFT JOIN LATERAL ( SELECT * FROM Gerenciadores_Reservas 
+            JOIN Gerenciadores ON Gerenciadores_Reservas.idGerenciador = Gerenciadores.id
+            WHERE Reservas.id = Gerenciadores_Reservas.idReserva 
+             ORDER BY Gerenciadores_Reservas.id DESC LIMIT 1) as si ON si.idreserva = Reservas.id`;
             const res = await client.query(query);
 
             return res.rows;
@@ -74,14 +75,15 @@ module.exports = {
 
     async getId(id) {
         try {
-            const query = `SELECT Gerenciadores.nomecompleto, Gerenciadores.cpf, Gerenciadores_Reservas.tipo, Reservas.datahorainicio, 
+            const query = `SELECT si.idgerenciador as gerenciadorid, Reservas.id, si.nomecompleto, si.cpf, si.tipo, Reservas.datahorainicio, 
             Reservas.datahorafim, Reservas.motivo,  Usuarios.nomecompleto as usuarionome, Quadras.nome as quadra FROM Reservas
             JOIN Usuarios ON Reservas.idusuario = Usuarios.id
             JOIN Quadras ON Reservas.idquadra = Quadras.id
-            LEFT JOIN Gerenciadores_Reservas ON Reservas.id = Gerenciadores_Reservas.idReserva 
-            LEFT JOIN Gerenciadores ON Gerenciadores_Reservas.idGerenciador = Gerenciadores.id
-            WHERE Reservas.id = $1
-             ORDER BY Gerenciadores_Reservas.id DESC`;
+            LEFT JOIN LATERAL ( SELECT * FROM Gerenciadores_Reservas 
+            JOIN Gerenciadores ON Gerenciadores_Reservas.idGerenciador = Gerenciadores.id
+            WHERE Reservas.id = Gerenciadores_Reservas.idReserva 
+             ORDER BY Gerenciadores_Reservas.id DESC LIMIT 1) as si ON si.idreserva = Reservas.id
+            WHERE Rerservas.id = $1`;
             const res = await client.query(query, [id]);
 
             return res.rows;

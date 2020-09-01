@@ -1,18 +1,12 @@
-import React, { useReducer } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getUsuarioRequest } from "store/modules/usuario/actions";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
     Row,
     Col,
     Button,
-    CardFooter,
-  } from "reactstrap";
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
 import MaterialTable from "material-table";

@@ -1,17 +1,11 @@
-import React, { useReducer } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getBlocoRequest } from "store/modules/bloco/actions";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
     Row,
     Col,
     Button,
-    CardFooter,
   } from "reactstrap";
 import { Link } from "react-router-dom";
 

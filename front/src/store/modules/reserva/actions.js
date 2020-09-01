@@ -18,6 +18,14 @@ export function newReservaRequest(reserva) {
     };
 }
 
+export function updateReservaRequest(reserva) {
+    return {
+        type: '@reserva/UPDATE_RESERVA_REQUEST',
+        payload: { reserva },
+    };
+}
+
+
 export function newReservaSuccess(reserva) {
     return {
         type: '@reserva/NEW_RESERVA_SUCCESS',

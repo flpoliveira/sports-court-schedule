@@ -1,21 +1,12 @@
-import React, { useReducer } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getReservaRequest } from "store/modules/reserva/actions";
+import { getReservaRequest, updateReservaRequest } from "store/modules/reserva/actions";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
     Row,
     Col,
-    FormGroup,
-    Label,
-    Input,
     Button,
-    CardFooter,
-  } from "reactstrap";
+} from "reactstrap";
 import { Link } from "react-router-dom";
 
 import MaterialTable from "material-table";
@@ -24,11 +15,10 @@ const Reserva = () => {
 
     const dispatch = useDispatch();
     const reservas = useSelector(state => {
-        console.log(state);
         return state.reserva.reserva;
     });
-    const quadras = useSelector(state => {
-        return state.quadra.quadra
+    const gerenciador = useSelector(state => {
+        return state.auth.user.id;
     });
 
     React.useEffect(() => {
@@ -46,6 +36,7 @@ const Reserva = () => {
                             <MaterialTable
                                 title={"Lista de Reservas"} 
                                 columns={[
+                                    
                                     {title: "Motivo", field: "motivo"},
                                     {title: "Data Hora Inicio", field: "datahorainicio"},
                                     {title: "Data Hora Fim", field: "datahorafim"},
@@ -55,6 +46,34 @@ const Reserva = () => {
                                     {title: "Quadra", field:"quadra"}
 
                                 ]}
+                                actions={[
+                                    rowData => ({
+                                        icon: 'check',
+                                        tooltip: 'Confirmar Reserva',
+                                        onClick: (event, rowData) => {
+                                            const reserva = {
+                                                idreserva: rowData.id,
+                                                idgerenciador: gerenciador,
+                                                tipo: 2
+                                            };
+                                            dispatch(updateReservaRequest(reserva));
+                                        },
+                                        disabled: rowData.acao !== "Efetuou a reserva"
+                                    }),
+                                    rowData => ({
+                                        icon: 'close',
+                                        tooltip: 'Cancelar Reserva',
+                                        onClick: (event, rowData) => {
+                                            const reserva = {
+                                                idreserva: rowData.id,
+                                                idgerenciador: gerenciador,
+                                                tipo: 3
+                                            };
+                                            dispatch(updateReservaRequest(reserva));
+                                        },
+                                        disabled: rowData.acao !== "Efetuou a reserva"
+                                    }),
+                                  ]}
                                 data={
                                     reservas.map((reserva) => {
                                         const dtinicio = new Date(reserva.datahorainicio);
@@ -74,6 +93,7 @@ const Reserva = () => {
                                         }
                                         console.log(dtfim);
                                         return {
+                                            id: reserva.id,
                                             motivo: reserva.motivo,
                                             datahorainicio: dtinicio.toLocaleDateString() + " " + dtinicio.toLocaleTimeString(),
                                             datahorafim: dtfim.toLocaleDateString() + " " + dtinicio.toLocaleTimeString(),

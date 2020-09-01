@@ -4,7 +4,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 import api from '../../../services/api';
 import { push } from 'connected-react-router';
 
-import { getReservaSuccess } from './actions';
+import { getReservaSuccess, getReservaRequest } from './actions';
 
 export function* getReserva({ payload }) {
   try {
@@ -50,7 +50,35 @@ export function* newReserva({ payload }) {
   }
 }
 
+export function* updateReserva({ payload }) {
+  
+  try {
+    const response = yield call(api.post, 'reservaupdate', payload.reserva);
+
+    const reserva = response.data;
+    if (reserva.error) {
+      yield put(toastrActions.add({
+        type: 'error',
+        title: reserva.error,
+      }));
+    } else {
+      yield put(toastrActions.add({
+        type: 'success',
+        title: `Reserva atualizada com sucesso #${Math.random()}`,
+      }));
+      yield put(getReservaRequest());
+    }
+  } catch (err) {
+
+    yield put(toastrActions.add({
+      type: 'error',
+      title: `Falha ao atualizar a Reserva #${Math.random()}`,
+    }))
+  }
+}
+
 export default all([
+  takeLatest('@reserva/UPDATE_RESERVA_REQUEST', updateReserva),
   takeLatest('@reserva/GET_RESERVA_REQUEST', getReserva),
   takeLatest('@reserva/NEW_RESERVA_REQUEST', newReserva),
 ]);

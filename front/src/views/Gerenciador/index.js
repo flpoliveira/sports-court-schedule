@@ -1,24 +1,14 @@
-import React, { useReducer } from "react";
+import React from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getGerenciadorRequest } from "store/modules/gerenciador/actions";
 import {
-    Card,
-    CardHeader,
-    CardBody,
-    CardTitle,
-    Table,
     Row,
     Col,
     Button,
-    CardFooter,
   } from "reactstrap";
 import { Link } from "react-router-dom";
-import { BiCheckCircle } from "react-icons/bi";
-import { RiCloseCircleLine } from "react-icons/ri"
 
-
-import { toast } from 'react-toastify';
 import MaterialTable from "material-table";
 
 const Gerenciador = () => {

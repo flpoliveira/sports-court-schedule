@@ -42,6 +42,7 @@ module.exports = {
                 idgerenciador,
                 tipo
             });
+            console.log(reserva);
             return response.send(reserva);
 
         } catch (err) {
