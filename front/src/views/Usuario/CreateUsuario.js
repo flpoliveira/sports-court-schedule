@@ -42,7 +42,7 @@ const CreateUsuario = () => {
             }}>
               <CardHeader>
                 <CardTitle tag="h4">
-                  Novo Gerenciador
+                  Novo Usuario
                   <Col size={6}>  
                     <Link to="/usuario">
                         <Button 
@@ -67,7 +67,7 @@ const CreateUsuario = () => {
                     <Input type="text" name="nome" id="name" placeholder="Nome Completo" onChange={(e) => setNomeCompleto(e.target.value)}/>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="email">Nome</Label>
+                    <Label for="email">Email</Label>
                     <Input type="email" name="email" id="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
                   </FormGroup>
                   <FormGroup>

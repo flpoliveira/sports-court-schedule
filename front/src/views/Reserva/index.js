@@ -96,7 +96,7 @@ const Reserva = () => {
                                             id: reserva.id,
                                             motivo: reserva.motivo,
                                             datahorainicio: dtinicio.toLocaleDateString() + " " + dtinicio.toLocaleTimeString(),
-                                            datahorafim: dtfim.toLocaleDateString() + " " + dtinicio.toLocaleTimeString(),
+                                            datahorafim: dtfim.toLocaleDateString() + " " + dtfim.toLocaleTimeString(),
                                             reservante: reserva.usuarionome,
                                             gerenciador: reserva.nomecompleto,
                                             acao,
