@@ -30,9 +30,8 @@ module.exports = {
             let usuario = null;
             if (typeof id === "undefined") {
                 usuario = await UsuariosModel.getAll();
-            } else {
-                usuario = await UsuariosModel.getId(id);
-            }
+            } 
+            
             console.log(usuario);
 
             return response.send(usuario);
