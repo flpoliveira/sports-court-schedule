@@ -4,6 +4,7 @@ module.exports = {
     async create(request, response, next) {
         
         const {nomecompleto, email, senha, cpf, ehAdmin } = request.body;
+        console.log(request.body);
         try {
             if (
                 typeof nomecompleto === "undefined" ||

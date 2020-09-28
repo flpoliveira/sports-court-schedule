@@ -13,10 +13,10 @@ const routes = express.Router();
 
 
 routes.post("/login", LoginController.login);
+routes.post("/gerenciador", GerenciadoresController.create);
 
 routes.use(authJwt);
 routes.get("/gerenciador", GerenciadoresController.get);
-routes.post("/gerenciador", GerenciadoresController.create);
 
 routes.get("/bloco", BlocosController.get);
 routes.post("/bloco", BlocosController.create);

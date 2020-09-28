@@ -73,7 +73,7 @@ const CreateQuadra = () => {
                 <Form>
                   <FormGroup>
                     <Label for="name">Nome</Label>
-                    <Input type="text" name="nome" id="name" placeholder="Nome do bloco" onChange={(e) => setNome(e.target.value)}/>
+                    <Input type="text" name="nome" id="name" placeholder="Nome da quadra" onChange={(e) => setNome(e.target.value)}/>
                   </FormGroup>
                   <FormGroup>
                     <Label for="cpf">Descricao</Label>

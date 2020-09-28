@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { getQuadraRequest } from "store/modules/quadra/actions";
 import {
@@ -15,12 +14,13 @@ const Quadra = () => {
 
     const dispatch = useDispatch();
     const quadras = useSelector(state => {
-        return state.quadra.quadra
+        return state.quadra.quadra;
     });
 
     React.useEffect(() => {
         dispatch(getQuadraRequest());
     }, [dispatch]);
+
 
     return (
         <div className="content">
@@ -37,12 +37,12 @@ const Quadra = () => {
                                     {title: "Bloco", field: "bloconome"},
                                 ]}
                                 data={
-                                    quadras.map((quadra) => {
+                                    (quadras || []).map((quadra) => {
                                         return {
                                             nome: quadra.nome,
                                             descricao: quadra.descricao,
                                             bloconome: quadra.bloconome,
-                                        }
+                                        };
                                     })
                                 }
                             />

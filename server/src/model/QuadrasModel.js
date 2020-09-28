@@ -2,52 +2,39 @@ const client = require("../config/db");
 
 module.exports = {
     async create(object) {
-        const { nome, descricao, idbloco } = object;
-
         try {
-            const query = `INSERT INTO Quadras (nome, descricao, idbloco) 
-            VALUES ($1, $2, $3) RETURNING *`;
-            const res = await client.query(query,[nome, descricao, idbloco]);
-            console.log(res, query);
-            return res.rows[0];
+            const res = await client.db("database").collection("quadras").insertOne(object);
+            res.ops[0].id = res.ops[0]._id;
+            delete res.ops[0]._id;
+            return res.ops[0];
         } catch (error) {
-            return {error};
+            return { error: "Falha ao cadastrar a quadra", message: error }
         }
-       
     },
 
     async getAll() {
         try {
-            const query = `SELECT Quadras.id, Quadras.nome, Quadras.descricao, Blocos.nome as Bloconome 
-            FROM Quadras
-            JOIN Blocos ON Quadras.idbloco = Blocos.id `;
-            const res = await client.query(query);
+            const quadras = await client.db("database").collection("quadras").find({}).toArray();
+            const blocos = await client.db("database").collection("blocos").find({}).toArray();
+            const arr = [];
 
-            return res.rows;
+            for (const quadra of quadras) {
+                console.log(quadra);
+                for (const bloco of blocos) {
+                    console.log(bloco);
+                    if (quadra.idbloco == bloco._id) {
+                        arr.push({
+                            ...quadra,
+                            id: quadra._id,
+                            bloconome: bloco.nome
+                        });
+                        break;
+                    }
+                }
+            }
+            return arr;
         } catch (error) {
-            return {error};
-        }
-    },
-
-    async getId(id) {
-        try {
-            const query = `SELECT * FROM Quadras WHERE id = $1`;
-            const res = await client.query(query, [id]);
-
-            return res.rows;
-        } catch (error) {
-            return {error};
-        }
-    },
-
-    async delete(id) {
-        try {
-            const query = `DELETE FROM Quadras WHERE id = $1`;
-            const res = await client.query(query, [id]);
-
-            return res.rows;
-        } catch (error) {
-            return {error};
+            return { error: "Falha ao listar os quadras", message: error }
         }
     },
 

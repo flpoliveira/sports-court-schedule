@@ -27,14 +27,11 @@ module.exports = {
         try {
 
             const { id } = request.query;
-            let quadra = null;
+            let quadra = [];
             if (typeof id === "undefined") {
                 quadra = await QuadrasModel.getAll();
                 console.log(quadra);
-            } else {
-                quadra = await QuadrasModel.getId(id);
-            }
-            
+            } 
 
             return response.send(quadra);
         } catch (err) {

@@ -31,7 +31,7 @@ const Reserva = () => {
             <Col lg="12" md="12">
                 <Row>
                     <Col lg="12" md="12">
-                    
+                    {(!reservas.error) && (
                     <div style={{ maxWidth: "100%" }}>
                             <MaterialTable
                                 title={"Lista de Reservas"} 
@@ -78,7 +78,7 @@ const Reserva = () => {
                                     reservas.map((reserva) => {
                                         const dtinicio = new Date(reserva.datahorainicio);
                                         const dtfim = new Date(reserva.datahorafim);
-
+                                        console.log(reserva);
                                         let acao = "";
                                         switch(reserva.tipo) {
                                             case 2:
@@ -103,11 +103,10 @@ const Reserva = () => {
                                             quadra: reserva.quadra
                                         };
                                     })
-                                        
                                 }
                             />
                         </div>
-                        
+                    )}
                     </Col>
                 </Row>
                 <Link to="/createreserva" style={{display: "flex", justifyContent: "center"}}>

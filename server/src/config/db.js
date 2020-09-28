@@ -1,15 +1,12 @@
-const { Client } = require("pg");
+const { MongoClient } = require("mongodb");
 
-const client = new Client({
-    user: "postgres",
-    host: "localhost",
-    database: "database",
-    password: "postgres",
-    port: 5432,
-});
+// Connection URI
+const uri = "mongodb+srv://root:10filipe@cluster0.gng5l.mongodb.net/database?retryWrites=true&w=majority";
 
-console.log("connecting to database...");
+
+// Create a new MongoClient
+const client = new MongoClient(uri, { useUnifiedTopology: true });
+
 client.connect();
-console.log("connected!");
 
 module.exports = client;

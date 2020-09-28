@@ -26,8 +26,8 @@ const CreateReserva = () => {
   const [datahorainicio, setDataHoraInicio] = React.useState("");
   const [datahorafim, setDataHoraFim] = React.useState("");
   const [motivo, setMotivo] = React.useState("");
-  const [idusuario, setIdUsuario] = React.useState("1");
-  const [idquadra, setIdQuadra] = React.useState("1");
+  const [idusuario, setIdUsuario] = React.useState("");
+  const [idquadra, setIdQuadra] = React.useState("");
 
   const quadras = useSelector(state => {
     return state.quadra.quadra
@@ -49,8 +49,8 @@ const CreateReserva = () => {
       datahorafim: dtfim,
       ativo: true, 
       motivo, 
-      idusuario: Number(idusuario), 
-      idquadra: Number(idquadra), 
+      idusuario: idusuario, 
+      idquadra: idquadra, 
       idgerenciador: gerenciador
     }
     console.log(reserva);
@@ -61,6 +61,7 @@ const CreateReserva = () => {
     dispatch(getQuadraRequest());
     dispatch(getUsuarioRequest());
   }, [dispatch]); 
+
 
   return (
     <>
@@ -113,7 +114,8 @@ const CreateReserva = () => {
                         setIdQuadra(e.target.value);
                       }}
                     >
-                     {quadras.map((quadra, i) => (
+                      <option value="">Escolha uma quadra</option>
+                     {quadras.map((quadra, i) => quadra.id && (
                        <option key={`${quadra.id}usuario`} value={quadra.id}>{`${quadra.nome} - ${quadra.descricao}`}</option>
                      ))}
                     </Input>
@@ -126,7 +128,9 @@ const CreateReserva = () => {
                         console.log(e.target.value);
                         setIdUsuario(e.target.value);
                       }}
+                      value={idusuario}
                     >
+                      <option value="">Escolha um usuario</option>
                      {usuarios.map((usuario, i) => (
                        <option key={`${usuario.id}usuario`} value={usuario.id}>{`${usuario.nomecompleto} - ${usuario.cpf}`}</option>
                      ))}

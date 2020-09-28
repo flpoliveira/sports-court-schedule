@@ -1,32 +1,36 @@
 const client = require("../config/db");
 
 module.exports = {
-    async login(cpf, senha, callback) {
-        const query = `SELECT id, nomeCompleto, email, cpf, ehAdmin FROM Gerenciadores WHERE cpf = $1 AND senha = $2`;
-        client.query(query, [cpf, senha], 
-            (err, res) => {
-                if(err) {
-                    callback(err);
-                } else {
-                    var rows = res.rowCount;
-                    if (rows == 0) {
-                        err = "CPF ou senha incorreto!";
-                    }
-                    callback(err, res.rows[0]);
-                }
+    async login (cpf, senha) {
+        try {
+            console.log(cpf, senha);
+            const res = await client.db("database").collection("gerenciadores").findOne({cpf, senha});
+
+            console.log(res, "here");
+            if (res === null) {
+                return false;
             }
-        );
+
+            return {
+                ...res,
+                id: res._id
+            };
+
+        } catch (error) {
+            return false;
+        }
     },
     
     async create(object) {
-        const {nomecompleto, email, senha, cpf, ehAdmin} = object;
-
+        const { senha, cpf} = object;
+        
         try {
-            const query = `INSERT INTO Gerenciadores (nomecompleto, email, senha, cpf, ehAdmin) 
-            VALUES ($1, $2,  $3, $4, $5) RETURNING *`;
-            const res = await client.query(query,[nomecompleto, email, senha, cpf, ehAdmin]);
-            console.log(res, query);
-            return res.rows[0];
+
+            const aux = await client.db("database").collection("gerenciadores").insertOne(object);
+            aux.ops[0].id = aux.ops[0]._id;
+            delete aux.ops[0]._id;
+            return aux.ops[0];
+
         } catch (error) {
             return {error};
         }
@@ -35,47 +39,17 @@ module.exports = {
 
     async getAll() {
         try {
-            const query = `SELECT * FROM Gerenciadores`;
-            const res = await client.query(query);
-
-            return res.rows;
+            const ret = await client.db("database").collection("gerenciadores").find({}).toArray();
+      
+            return ret.map(e => {
+              return {
+                ...e,
+                id: e._id,
+              }
+            });
         } catch (error) {
             return {error};
         }
     },
 
-    async getId(id) {
-        try {
-            const query = `SELECT * FROM Gerenciadores WHERE id = $1`;
-            const res = await client.query(query, [id]);
-
-            return res.rows;
-        } catch (error) {
-            return {error};
-        }
-    },
-
-    async delete(id) {
-        try {
-            const query = `DELETE FROM Gerenciadores WHERE id = $1`;
-            const res = await client.query(query, [id]);
-
-            return res.rows;
-        } catch (error) {
-            return {error};
-        }
-    },
-
-    async update(object) {
-        try {
-            const { id, nomeCompleto, email, senha, cpf, ehAdmin } = object;
-
-            const query = `UPDATE Gerenciadores SET nomeCompleto = $1, email = $2, senha = $3, cpf = $4, ehAdmin = $5 WHERE id = $6`;
-            const res = await client.query(query, [nomeCompleto, email, senha, cpf, ehAdmin, id]);
-
-            return res.rows;
-        } catch (error) {
-            return {error};
-        }
-    }
 };
